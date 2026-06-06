@@ -226,10 +226,69 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 /* RESPONSIVE */
+/* WHO THIS IS FOR */
+#for{background:var(--ink-2)}
+.for-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:3rem}
+.for-card{background:var(--ink-3);border:1px solid var(--line);border-left:2px solid var(--coral);border-radius:var(--radius);padding:1.5rem 1.75rem;transition:border-color .25s}
+.for-card:hover{border-color:var(--line-2);border-left-color:var(--coral)}
+.for-card p{font-size:.95rem;color:var(--text-muted);font-weight:300;line-height:1.7}
+.for-card p strong{color:var(--paper);font-weight:500}
+.for-footer{margin-top:2rem;padding:1.25rem 1.5rem;background:rgba(232,86,79,.06);border:1px solid rgba(232,86,79,.15);border-radius:var(--radius-sm);display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.for-footer p{font-family:var(--font-mono);font-size:.78rem;color:var(--text-muted);line-height:1.6}
+.for-footer strong{color:var(--coral-soft)}
+
+/* SERVICES FEATURED */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3.5rem}
+.service-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;padding:2.25rem}
+.featured-left{}
+.featured-right{border-left:1px solid var(--line);padding-left:2.5rem}
+.featured-outcomes{margin-top:1.25rem}
+.featured-outcomes p{font-family:var(--font-mono);font-size:.72rem;color:var(--coral-soft);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.75rem}
+.featured-outcomes ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.featured-outcomes li{font-size:.875rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:.6rem;font-weight:300;line-height:1.55}
+.featured-outcomes li::before{content:'→';color:var(--coral);flex-shrink:0;margin-top:.05em}
+.featured-badge{display:inline-block;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);background:rgba(232,86,79,.10);border:1px solid rgba(232,86,79,.2);padding:.22rem .65rem;border-radius:var(--radius-pill);margin-bottom:1rem}
+.featured-what{font-family:var(--font-mono);font-size:.72rem;color:var(--coral-soft);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.75rem}
+.featured-steps{display:flex;flex-direction:column;gap:.6rem;margin-top:.5rem}
+.fstep{display:flex;align-items:flex-start;gap:.85rem}
+.fstep-num{font-family:var(--font-mono);font-size:.68rem;color:var(--coral);flex-shrink:0;width:18px;margin-top:.15em}
+.fstep-text{font-size:.875rem;color:var(--text-muted);font-weight:300;line-height:1.55}
+
+/* ESTIMATOR REDESIGN */
+.est-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;margin-top:3rem}
+.est-panel{background:var(--ink-3);border:1px solid var(--line);border-radius:var(--radius);padding:2rem}
+.est-panel-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--coral-soft);margin-bottom:1.5rem}
+.est-service-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.75rem}
+.est-svc{background:var(--ink);border:1px solid var(--line);border-radius:var(--radius-sm);padding:.85rem 1rem;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--font-body)}
+.est-svc:hover{border-color:var(--line-2)}
+.est-svc.active{background:rgba(232,86,79,.10);border-color:var(--coral)}
+.est-svc-name{font-family:var(--font-display);font-size:.875rem;font-weight:700;color:var(--paper);margin-bottom:.15rem}
+.est-svc-sub{font-family:var(--font-mono);font-size:.66rem;color:var(--text-faint);letter-spacing:.04em}
+.est-slider-row{margin-bottom:1.5rem}
+.est-slider-label{font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted);letter-spacing:.04em;margin-bottom:.65rem;display:flex;justify-content:space-between}
+.est-slider-label span{color:var(--paper)}
+.est-range{width:100%;-webkit-appearance:none;appearance:none;height:3px;background:var(--ink);border-radius:4px;outline:none;cursor:pointer}
+.est-range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--coral);cursor:pointer}
+.est-size-row{margin-bottom:0}
+.est-size-btns{display:flex;gap:.5rem;flex-wrap:wrap}
+.est-output{background:var(--ink-3);border:1px solid var(--line);border-radius:var(--radius);padding:2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:320px}
+.est-output-top{}
+.est-output-service{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--coral-soft);margin-bottom:.5rem}
+.est-output-price{font-family:var(--font-display);font-size:2.8rem;font-weight:800;color:var(--coral);line-height:1;margin-bottom:.5rem}
+.est-output-desc{font-size:.84rem;color:var(--text-muted);font-weight:300;line-height:1.65;margin-top:1rem}
+.est-output-bottom{}
+.est-output-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--coral);color:var(--ink);padding:.75rem 1.5rem;border-radius:var(--radius-pill);font-size:.875rem;font-weight:500;text-decoration:none;transition:background .2s;margin-bottom:.75rem;width:100%;justify-content:center}
+.est-output-cta:hover{background:var(--coral-deep)}
+.est-output-note{font-family:var(--font-mono);font-size:.68rem;color:var(--text-faint);text-align:center;line-height:1.5}
+
 @media(max-width:900px){
   .process-grid{grid-template-columns:1fr 1fr;gap:2rem}
   .process-grid::before{display:none}
   .about-grid,.contact-grid{grid-template-columns:1fr;gap:3rem}
+  .service-card.featured{grid-template-columns:1fr;gap:1.5rem}
+  .featured-right{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:1.5rem}
+  .est-grid{grid-template-columns:1fr}
+  .for-grid{grid-template-columns:1fr}
 }
 @media(max-width:640px){
   .hamburger{display:flex}
@@ -237,7 +296,10 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
   .team-grid{grid-template-columns:1fr 1fr}
   .form-row{grid-template-columns:1fr}
   section{padding:5rem 1.25rem}
-  .est-card{padding:1.5rem}
+  .est-panel{padding:1.5rem}
+  .services-grid{grid-template-columns:1fr}
+  .service-card.featured{grid-column:auto}
+  .est-service-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -257,10 +319,10 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
+    <li><a href="#for">Who it's for</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#portfolio">Work</a></li>
     <li><a href="#estimator">Pricing</a></li>
-    <li><a href="#contact" class="nav-cta">Start a project</a></li>
+    <li><a href="#contact" class="nav-cta">Get started</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
@@ -269,10 +331,10 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#for" onclick="closeMobile()">Who it's for</a>
   <a href="#about" onclick="closeMobile()">About</a>
-  <a href="#portfolio" onclick="closeMobile()">Work</a>
   <a href="#estimator" onclick="closeMobile()">Pricing</a>
-  <a href="#contact" class="mob-cta" onclick="closeMobile()">Start a project</a>
+  <a href="#contact" class="mob-cta" onclick="closeMobile()">Get started</a>
 </div>
 
 <section id="hero">
@@ -330,6 +392,32 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
   </div>
 </section>
 
+<section id="for">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Is this for you?</p>
+      <h2 class="section-title">If any of this sounds familiar...</h2>
+    </div>
+    <div class="for-grid reveal">
+      <div class="for-card">
+        <p><strong>You're running on spreadsheets and manual processes</strong> that made sense three years ago — but now they're the bottleneck holding everything up.</p>
+      </div>
+      <div class="for-card">
+        <p><strong>You've tried an AI tool and it didn't stick.</strong> Nobody was quite sure how to use it, it got forgotten after week two, and now it's just another subscription.</p>
+      </div>
+      <div class="for-card">
+        <p><strong>Your team knows AI is important</strong> but nobody has the time — or the mandate — to actually figure out where to start or what's worth using.</p>
+      </div>
+      <div class="for-card">
+        <p><strong>You've been quoted big numbers</strong> for vague "AI transformation" work that didn't come with a clear outcome, timeline, or any real training for your people.</p>
+      </div>
+    </div>
+    <div class="for-footer reveal">
+      <p>We work primarily with <strong>small teams of 2–50 people</strong> across any industry. As we grow, so does the size of business we can take on — but right now, smaller teams get our full attention and a faster turnaround than any large firm can offer.</p>
+    </div>
+  </div>
+</section>
+
 <section id="services">
   <div class="container">
     <div class="reveal">
@@ -338,34 +426,58 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
       <p class="section-sub">We'll show you exactly where AI helps — and where it doesn't. Then we build it in, and make sure your team can run it without us.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card reveal" onclick="toggleService(this)">
-        <div class="service-icon">🔍</div>
-        <div class="service-name">AI Audit &amp; Strategy</div>
-        <div class="service-desc">We map your operations and find the specific places AI will save real time — not just where it sounds good on paper.</div>
-        <div class="service-toggle">More info <span class="toggle-arrow">↓</span></div>
-        <div class="service-expand"><div class="sep-inner"><ul><li>Current workflow review and time audit</li><li>Opportunity scoring across your business</li><li>Clear integration roadmap with priorities</li><li>Honest advice on what's worth it and what isn't</li></ul></div></div>
+
+      <div class="service-card featured reveal">
+        <div class="featured-left">
+          <div class="featured-badge">Start here</div>
+          <div class="service-icon">🔍</div>
+          <div class="service-name" style="font-size:1.3rem;margin-bottom:.65rem">AI Audit &amp; Strategy</div>
+          <div class="service-desc" style="font-size:.95rem;max-width:420px">Before you touch a single tool, you need to know where AI will actually move the needle for your business. Most companies skip this step — and then wonder why nothing sticks.<br><br>We spend time inside your workflows, find the highest-value opportunities, and hand you a prioritised roadmap you can act on immediately.</div>
+        </div>
+        <div class="featured-right">
+          <div class="featured-outcomes">
+            <p>// what you walk away with</p>
+            <ul>
+              <li>A clear map of every workflow we reviewed and where time is being lost</li>
+              <li>Prioritised list of AI opportunities — ranked by impact and ease of implementation</li>
+              <li>Specific tool recommendations with honest trade-offs, not sales pitches</li>
+              <li>A phased integration roadmap you own and can hand to anyone</li>
+              <li>Honest advice on what's not worth automating yet (just as valuable)</li>
+            </ul>
+          </div>
+          <div class="featured-what" style="margin-top:1.75rem">// how it works</div>
+          <div class="featured-steps">
+            <div class="fstep"><div class="fstep-num">1.</div><div class="fstep-text">Kick-off call to understand your business, team, and biggest frustrations</div></div>
+            <div class="fstep"><div class="fstep-num">2.</div><div class="fstep-text">We shadow your workflows — async or in-person, whatever works for you</div></div>
+            <div class="fstep"><div class="fstep-num">3.</div><div class="fstep-text">Audit report delivered with a plain-English briefing walkthrough</div></div>
+          </div>
+        </div>
       </div>
+
       <div class="service-card reveal" onclick="toggleService(this)">
         <div class="service-icon">⚙️</div>
         <div class="service-name">AI Integration &amp; Build</div>
-        <div class="service-desc">We connect and configure the right AI tools into your existing operations — from automating repetitive tasks to building custom AI workflows.</div>
-        <div class="service-toggle">More info <span class="toggle-arrow">↓</span></div>
-        <div class="service-expand"><div class="sep-inner"><ul><li>Tool selection and setup (ChatGPT, Claude, Copilot, etc.)</li><li>Workflow automation with Make, Zapier, or n8n</li><li>Custom AI assistants trained on your business</li><li>Integration with your existing software stack</li></ul></div></div>
+        <div class="service-desc">We connect and configure the right AI tools directly into your operations — from automating repetitive tasks to building custom AI workflows and assistants.</div>
+        <div class="service-toggle">What's included <span class="toggle-arrow">↓</span></div>
+        <div class="service-expand"><div class="sep-inner"><ul><li>Tool selection and setup (ChatGPT, Claude, Copilot, and more)</li><li>Workflow automation with Make, Zapier, or n8n</li><li>Custom AI assistants trained on your business context</li><li>Integration with your existing software stack</li><li>Documentation so your team can maintain it independently</li></ul></div></div>
       </div>
+
       <div class="service-card reveal" onclick="toggleService(this)">
         <div class="service-icon">🎓</div>
         <div class="service-name">Workshops &amp; Training</div>
-        <div class="service-desc">Practical, hands-on sessions for your team — not slide decks and theory. People leave knowing how to actually use AI in their day-to-day work.</div>
-        <div class="service-toggle">More info <span class="toggle-arrow">↓</span></div>
-        <div class="service-expand"><div class="sep-inner"><ul><li>Half-day and full-day workshop formats</li><li>Role-specific sessions (ops, marketing, admin, management)</li><li>Prompt writing and AI tool fluency</li><li>Ongoing lunch-and-learn series available</li></ul></div></div>
+        <div class="service-desc">Practical, hands-on sessions — not slide decks and theory. Your team leaves knowing how to use AI in their actual day-to-day work, not just in theory.</div>
+        <div class="service-toggle">What's included <span class="toggle-arrow">↓</span></div>
+        <div class="service-expand"><div class="sep-inner"><ul><li>Half-day and full-day formats, in-person or remote</li><li>Role-specific sessions (ops, marketing, admin, leadership)</li><li>Practical prompt writing and AI tool fluency</li><li>Ongoing lunch-and-learn series available</li><li>Take-home reference materials for every attendee</li></ul></div></div>
       </div>
+
       <div class="service-card reveal" onclick="toggleService(this)">
         <div class="service-icon">🔄</div>
         <div class="service-name">Ongoing Support</div>
-        <div class="service-desc">AI moves fast. We stay in the loop so your setup keeps working, improves over time, and your team stays ahead of what's useful.</div>
-        <div class="service-toggle">More info <span class="toggle-arrow">↓</span></div>
-        <div class="service-expand"><div class="sep-inner"><ul><li>Monthly check-ins and usage reviews</li><li>Workflow updates as your needs change</li><li>New tool evaluation and rollout</li><li>Team Q&amp;A and drop-in support sessions</li></ul></div></div>
+        <div class="service-desc">AI moves fast. We stay in the loop so your setup keeps working, your team stays capable, and you're not missing tools that are actually worth using.</div>
+        <div class="service-toggle">What's included <span class="toggle-arrow">↓</span></div>
+        <div class="service-expand"><div class="sep-inner"><ul><li>Monthly check-ins and workflow performance reviews</li><li>Updates and tweaks as your operations evolve</li><li>New tool evaluation — we filter the noise for you</li><li>Drop-in Q&amp;A sessions for your team</li><li>Priority response for anything urgent</li></ul></div></div>
       </div>
+
     </div>
   </div>
 </section>
@@ -461,15 +573,56 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
 
 <section id="estimator">
   <div class="container">
-    <div class="est-wrap reveal">
+    <div class="reveal">
       <p class="section-label">Rough pricing</p>
       <h2 class="section-title">Get a ballpark figure</h2>
-      <p class="section-sub">Not a formal quote — just a starting point. Every engagement gets scoped individually after we understand what you need.</p>
-      <div class="est-card">
-        <div class="est-row"><div class="est-label">Service <span id="esl">AI Audit</span></div><div class="toggle-group"><button class="tbtn active" data-s="audit" onclick="updateEst(this,'s')">AI Audit</button><button class="tbtn" data-s="integration" onclick="updateEst(this,'s')">Integration</button><button class="tbtn" data-s="workshop" onclick="updateEst(this,'s')">Workshop</button><button class="tbtn" data-s="ongoing" onclick="updateEst(this,'s')">Ongoing support</button></div></div>
-        <div class="est-row"><div class="est-label">Complexity <span id="ecl">Medium</span></div><input type="range" class="est-range" id="ecr" min="1" max="3" step="1" value="2" oninput="calcEst()"></div>
-        <div class="est-row" style="margin-bottom:0"><div class="est-label">Ongoing support? <span id="esl2">No</span></div><div class="toggle-group"><button class="tbtn active" data-v="no" onclick="updateEst(this,'v')">No thanks</button><button class="tbtn" data-v="yes" onclick="updateEst(this,'v')">Yes please</button></div></div>
-        <div class="est-result"><div><div style="font-family:var(--font-mono);font-size:.68rem;color:var(--text-faint);margin-bottom:.25rem;letter-spacing:.08em;text-transform:uppercase">Estimated range</div><div class="est-price" id="ep">$900 — $1,800</div></div><div class="est-note">A rough guide only. Send an enquiry and we'll come back with a scoped proposal within 24 hours.</div></div>
+      <p class="section-sub">Not a formal quote — just a rough sense of what to expect. Every engagement is scoped individually once we understand your situation.</p>
+    </div>
+    <div class="est-grid reveal">
+      <div class="est-panel">
+        <div class="est-panel-label">// 01 — pick a service</div>
+        <div class="est-service-grid">
+          <button class="est-svc active" data-s="audit" onclick="updateSvc(this)">
+            <div class="est-svc-name">AI Audit</div>
+            <div class="est-svc-sub">Where to start</div>
+          </button>
+          <button class="est-svc" data-s="integration" onclick="updateSvc(this)">
+            <div class="est-svc-name">Integration</div>
+            <div class="est-svc-sub">Build &amp; connect</div>
+          </button>
+          <button class="est-svc" data-s="workshop" onclick="updateSvc(this)">
+            <div class="est-svc-name">Workshop</div>
+            <div class="est-svc-sub">Train the team</div>
+          </button>
+          <button class="est-svc" data-s="ongoing" onclick="updateSvc(this)">
+            <div class="est-svc-name">Ongoing</div>
+            <div class="est-svc-sub">Per month</div>
+          </button>
+        </div>
+        <div class="est-slider-row">
+          <div class="est-slider-label">Scope / complexity <span id="ecl">Medium</span></div>
+          <input type="range" class="est-range" id="ecr" min="1" max="3" step="1" value="2" oninput="calcEst()">
+          <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.64rem;color:var(--text-faint);margin-top:.4rem"><span>Simple</span><span>Medium</span><span>Complex</span></div>
+        </div>
+        <div class="est-size-row">
+          <div class="est-slider-label" style="margin-bottom:.65rem">Team size <span id="etl">1–10 people</span></div>
+          <div class="est-size-btns">
+            <button class="tbtn active" data-t="small" onclick="updateSize(this)">1–10 people</button>
+            <button class="tbtn" data-t="mid" onclick="updateSize(this)">11–30 people</button>
+            <button class="tbtn" data-t="large" onclick="updateSize(this)">30+ people</button>
+          </div>
+        </div>
+      </div>
+      <div class="est-output">
+        <div class="est-output-top">
+          <div class="est-output-service" id="eos">AI Audit &amp; Strategy</div>
+          <div class="est-output-price" id="ep">$900 — $1,800</div>
+          <div class="est-output-desc" id="eod">A full review of your workflows and a prioritised roadmap for where AI will actually help. Delivered with a plain-English briefing so you know exactly what to do next.</div>
+        </div>
+        <div class="est-output-bottom">
+          <a href="#contact" class="est-output-cta">Get a proper quote →</a>
+          <div class="est-output-note">// These are rough estimates only. Actual pricing depends on your specific situation — we'll scope it properly after an initial conversation.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -600,10 +753,17 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
 function toggleService(card){const exp=card.querySelector('.service-expand');const isOpen=card.classList.contains('open');document.querySelectorAll('.service-card.open').forEach(c=>{c.classList.remove('open');c.querySelector('.service-expand').classList.remove('open')});if(!isOpen){card.classList.add('open');exp.classList.add('open')}}
 function toggleFaq(btn){const item=btn.parentElement;const ans=item.querySelector('.faq-ans');const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-ans').classList.remove('open')});if(!isOpen){item.classList.add('open');ans.classList.add('open')}}
 function submitForm(e){e.preventDefault();document.getElementById('contactForm').style.display='none';document.getElementById('formSuccess').style.display='block'}
-const ranges={audit:[[500,900],[900,1800],[1800,3500]],integration:[[800,2000],[2000,5000],[5000,12000]],workshop:[[600,1200],[1200,2500],[2500,5000]],ongoing:[[400,700],[700,1500],[1500,3000]]};
-let curS='audit',curV='no';
-function updateEst(btn,group){btn.closest('.toggle-group').querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(group==='s'){curS=btn.dataset.s;document.getElementById('esl').textContent=btn.textContent}if(group==='v'){curV=btn.dataset.v;document.getElementById('esl2').textContent=btn.dataset.v==='yes'?'Yes':'No'}calcEst()}
-function calcEst(){const c=parseInt(document.getElementById('ecr').value)-1;document.getElementById('ecl').textContent=['Simple','Medium','Complex'][c];let [lo,hi]=ranges[curS][c];if(curV==='yes'){lo=Math.round(lo*1.2);hi=Math.round(hi*1.2)}document.getElementById('ep').textContent='$'+lo.toLocaleString()+' — $'+hi.toLocaleString()}
+const estData={
+  audit:{name:'AI Audit &amp; Strategy',ranges:[[500,900],[900,1800],[1800,3500]],desc:'A full review of your workflows and a prioritised roadmap for where AI will actually help. Delivered with a plain-English briefing so you know exactly what to do next.'},
+  integration:{name:'AI Integration &amp; Build',ranges:[[800,2000],[2000,5000],[5000,12000]],desc:'We connect and configure the right AI tools into your operations — from automating repetitive tasks to custom AI workflows built around how your team actually works.'},
+  workshop:{name:'Workshop &amp; Training',ranges:[[600,1200],[1200,2500],[2500,5000]],desc:'A practical, hands-on session for your team. Half-day or full-day. People leave knowing how to use AI in their day-to-day work — not just in theory.'},
+  ongoing:{name:'Ongoing Support',ranges:[[400,700],[700,1500],[1500,3000]],desc:'Monthly retainer. We stay in the loop as AI evolves, keep your setup working, and make sure your team stays confident using the tools we\'ve built together.'}
+};
+const sizeMulti={small:1,mid:1.3,large:1.6};
+let curS='audit',curT='small';
+function updateSvc(btn){document.querySelectorAll('.est-svc').forEach(b=>b.classList.remove('active'));btn.classList.add('active');curS=btn.dataset.s;calcEst()}
+function updateSize(btn){document.querySelectorAll('[data-t]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');curT=btn.dataset.t;document.getElementById('etl').textContent=btn.textContent;calcEst()}
+function calcEst(){const c=parseInt(document.getElementById('ecr').value)-1;document.getElementById('ecl').textContent=['Simple','Medium','Complex'][c];const d=estData[curS];let [lo,hi]=d.ranges[c];const m=sizeMulti[curT];lo=Math.round(lo*m);hi=Math.round(hi*m);document.getElementById('ep').textContent='$'+lo.toLocaleString()+' — $'+hi.toLocaleString();document.getElementById('eos').innerHTML=d.name;document.getElementById('eod').textContent=d.desc}
 const ham=document.getElementById('hamburger');const mob=document.getElementById('mobileMenu');
 ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open')});
 function closeMobile(){ham.classList.remove('open');mob.classList.remove('open')}
