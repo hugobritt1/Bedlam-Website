@@ -324,6 +324,7 @@ footer{background:var(--ink);border-top:1px solid var(--line);padding:3rem 2.5re
     <li><a href="#estimator">Pricing</a></li>
     <li><a href="#contact" class="nav-cta">Get started</a></li>
   </ul>
+  <button onclick="downloadSource()" style="background:none;border:1px solid var(--line-2);color:var(--text-muted);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;padding:.38rem .85rem;border-radius:var(--radius-pill);cursor:pointer;transition:border-color .2s,color .2s;white-space:nowrap" onmouseover="this.style.borderColor='var(--line)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--line-2)';this.style.color='var(--text-muted)'">Source Code ↓</button>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
@@ -774,6 +775,7 @@ window.addEventListener('scroll',()=>{
   document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-120)current=s.id});
   document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+current)});
 });
+function downloadSource(){const src=document.documentElement.outerHTML;const md='```html\n'+src+'\n```';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([md],{type:'text/markdown'}));a.download='bedlam-website.md';a.click();URL.revokeObjectURL(a.href)}
 const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*55);observer.unobserve(entry.target)}});},{threshold:0.07});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 </script>
