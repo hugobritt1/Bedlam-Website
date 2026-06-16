@@ -82,4 +82,211 @@
     if(open && wrap && !wrap.contains(e.target)) window.toggleAcct();
   });
 })();
-</script></body></html>
+</script>
+<style>
+/* ── Dark-mode colour overrides ─────────────────────────────────── */
+html.dark body                    { background:#0f0f0f; color:#ede9e0; }
+html.dark .bg-paper               { background-color:#0f0f0f !important; }
+html.dark .bg-cream               { background-color:#161616 !important; }
+html.dark .bg-void                { background-color:#030304 !important; }
+html.dark .text-ink               { color:#ede9e0 !important; }
+html.dark .text-ash               { color:#888 !important; }
+html.dark .text-bone              { color:#c8c4bc !important; }
+html.dark .text-smoke             { color:#666 !important; }
+html.dark header                  { background-color:rgba(10,10,10,0.96) !important; border-bottom-color:rgba(255,255,255,0.07) !important; }
+html.dark .border-line            { border-color:rgba(255,255,255,0.09) !important; }
+html.dark .border-line-dark       { border-color:rgba(255,255,255,0.06) !important; }
+html.dark .bg-line                { background-color:rgba(255,255,255,0.09) !important; }
+/* hero gradient overlay */
+html.dark .from-paper\/50         { --tw-gradient-from: rgba(10,10,10,0.6) var(--tw-gradient-from-position) !important; }
+html.dark .to-paper               { --tw-gradient-to: #0f0f0f var(--tw-gradient-to-position) !important; }
+/* canvas particles — invert to white on dark bg */
+html.dark canvas                  { filter:invert(1) !important; }
+/* problem / arsenal hover */
+html.dark .hover\:bg-cream:hover  { background-color:#1e1e1e !important; }
+html.dark .hover\:bg-paper:hover  { background-color:#181818 !important; }
+/* article cards */
+html.dark article.bg-cream        { background-color:#161616 !important; }
+html.dark article.hover\:bg-paper:hover { background-color:#1c1c1c !important; }
+/* receipts stat cards */
+html.dark .flex.min-h-\[16rem\].bg-cream { background-color:#161616 !important; }
+/* nav links */
+html.dark .text-ash.transition-colors { color:#888 !important; }
+html.dark .hover\:text-ink:hover  { color:#ede9e0 !important; }
+/* form fields */
+html.dark .field                   { background:rgba(255,255,255,0.05) !important; border-color:rgba(255,255,255,0.12) !important; color:#ede9e0 !important; }
+html.dark .field::placeholder      { color:#555 !important; }
+/* wordmark fill */
+html.dark .wordmark-fill           { -webkit-text-stroke-color:rgba(255,255,255,0.08) !important; color:transparent !important; }
+/* manifesto section */
+html.dark #position .text-bone     { color:#c8c4bc !important; }
+/* text-outline (hollow text) in dark */
+html.dark .text-outline            { -webkit-text-stroke-color:rgba(237,233,224,0.4) !important; }
+html.dark .text-outline-ember      { -webkit-text-stroke-color:#E8564F !important; }
+/* section bg-paper inside method */
+html.dark #method                  { background-color:#0f0f0f !important; }
+html.dark #receipts                { background-color:#0f0f0f !important; }
+html.dark #problem                 { background-color:#0f0f0f !important; }
+html.dark #arsenal                 { background-color:#161616 !important; }
+/* grain overlay — keep but slightly less visible */
+html.dark .grain                   { opacity:0.4 !important; }
+
+/* ── Floating action menu (FAM) ─────────────────────────────────── */
+#fam-wrap {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+}
+#fam-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(17,17,17,0.6);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s;
+  color: #ede9e0;
+}
+#fam-btn:hover { background: rgba(17,17,17,0.85); }
+#fam-icon {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+#fam-options {
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  position: absolute;
+  bottom: 48px;
+  right: 0;
+  margin-bottom: 8px;
+  min-width: 160px;
+}
+@keyframes famFadeIn {
+  from { opacity:0; transform:translate(8px,8px); filter:blur(8px); }
+  to   { opacity:1; transform:translate(0,0);    filter:blur(0);   }
+}
+@keyframes famItemIn {
+  from { opacity:0; transform:translateX(16px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+.fam-item-anim { animation: famItemIn 0.28s cubic-bezier(0.34,1.56,0.64,1) both; }
+.fam-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(17,17,17,0.7);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ede9e0;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+  transition: background 0.2s;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+.fam-item:hover { background: rgba(17,17,17,0.9); }
+</style>
+
+<!-- Floating action menu -->
+<div id="fam-wrap">
+  <div id="fam-options">
+    <button class="fam-item" id="fam-theme-btn" onclick="famToggleTheme()">
+      <svg id="fam-theme-icon" width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <!-- sun icon (shown in dark mode = "switch to light") -->
+        <circle cx="6.5" cy="6.5" r="2.5" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="6.5" y1="0.5" x2="6.5" y2="2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="6.5" y1="11" x2="6.5" y2="12.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="0.5" y1="6.5" x2="2" y2="6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="11" y1="6.5" x2="12.5" y2="6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="2.4" y1="2.4" x2="3.4" y2="3.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="9.6" y1="9.6" x2="10.6" y2="10.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="10.6" y1="2.4" x2="9.6" y2="3.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="3.4" y1="9.6" x2="2.4" y2="10.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <span id="fam-theme-label">Dark Mode</span>
+    </button>
+  </div>
+  <button id="fam-btn" onclick="toggleFam()" aria-label="Options">
+    <svg id="fam-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <line x1="9" y1="3" x2="9" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="3" y1="9" x2="15" y2="9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  var famOpen = false;
+  var famOptions = document.getElementById('fam-options');
+  var famIcon = document.getElementById('fam-icon');
+  var isDark = false;
+
+  window.toggleFam = function(){
+    famOpen = !famOpen;
+    famIcon.style.transform = famOpen ? 'rotate(45deg)' : 'rotate(0deg)';
+    if(famOpen){
+      famOptions.style.display = 'flex';
+      famOptions.style.animation = 'famFadeIn 0.35s cubic-bezier(0.16,1,0.3,1) both';
+      var items = famOptions.querySelectorAll('.fam-item');
+      items.forEach(function(el,i){
+        el.classList.remove('fam-item-anim');
+        void el.offsetWidth;
+        el.style.animationDelay = (i * 0.05) + 's';
+        el.classList.add('fam-item-anim');
+      });
+    } else {
+      famOptions.style.opacity = '0';
+      famOptions.style.transform = 'translate(8px,8px)';
+      famOptions.style.filter = 'blur(6px)';
+      famOptions.style.transition = 'opacity 0.2s, transform 0.2s, filter 0.2s';
+      setTimeout(function(){
+        famOptions.style.display = 'none';
+        famOptions.style.opacity = '';
+        famOptions.style.transform = '';
+        famOptions.style.filter = '';
+        famOptions.style.transition = '';
+      }, 220);
+    }
+  };
+
+  window.famToggleTheme = function(){
+    isDark = !isDark;
+    document.documentElement.classList.toggle('dark', isDark);
+    document.getElementById('fam-theme-label').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    // persist
+    try{ localStorage.setItem('bedlam-theme', isDark ? 'dark' : 'light'); }catch(e){}
+  };
+
+  // Restore saved preference
+  try{
+    var saved = localStorage.getItem('bedlam-theme');
+    if(saved === 'dark'){
+      isDark = true;
+      document.documentElement.classList.add('dark');
+      document.getElementById('fam-theme-label').textContent = 'Light Mode';
+    }
+  }catch(e){}
+
+  // Close FAM on outside click
+  document.addEventListener('click', function(e){
+    var wrap = document.getElementById('fam-wrap');
+    if(famOpen && wrap && !wrap.contains(e.target)) window.toggleFam();
+  });
+})();
+</script>
