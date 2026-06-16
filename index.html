@@ -290,3 +290,185 @@ html.dark .grain                   { opacity:0.4 !important; }
   });
 })();
 </script>
+
+<!-- Hex-ball canvas animation -->
+<script>
+(function(){
+  /* ── Truncated icosahedron (soccer-ball) floating in hero ── */
+  function init(){
+    const section = document.getElementById('top');
+    if(!section) return;
+
+    // Hide existing Next.js scatter canvas
+    const oldCv = section.querySelector('canvas');
+    if(oldCv) oldCv.style.opacity = '0';
+
+    const cv = document.createElement('canvas');
+    cv.id = 'hex-ball-cv';
+    cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;';
+    section.insertBefore(cv, section.firstChild);
+    const ctx = cv.getContext('2d');
+
+    /* ── Geometry ─────────────────────────────────────────── */
+    const phi = (1 + Math.sqrt(5)) / 2;
+
+    // Generate 60 vertices of the truncated icosahedron
+    // Using all even permutations of 3 vertex families
+    const raw = [];
+    function evenPerms(a,b,c){ return [[a,b,c],[b,c,a],[c,a,b]]; }
+
+    // Family 1: even perms of (0, ±1, ±3φ)
+    for(const [sa,sb] of [[1,1],[1,-1],[-1,1],[-1,-1]])
+      for(const p of evenPerms(0, sa, 3*phi*sb)) raw.push(p);
+
+    // Family 2: even perms of (±2, ±(1+2φ), ±φ)
+    const B = 1+2*phi;
+    for(let s1 of [1,-1]) for(let s2 of [1,-1]) for(let s3 of [1,-1])
+      for(const p of evenPerms(2*s1, B*s2, phi*s3)) raw.push(p);
+
+    // Family 3: even perms of (±1, ±(2+φ), ±2φ)
+    const C = 2+phi, D = 2*phi;
+    for(let s1 of [1,-1]) for(let s2 of [1,-1]) for(let s3 of [1,-1])
+      for(const p of evenPerms(s1, C*s2, D*s3)) raw.push(p);
+
+    // Normalize to unit sphere
+    const verts = raw.map(([x,y,z]) => {
+      const len = Math.sqrt(x*x+y*y+z*z);
+      return [x/len, y/len, z/len];
+    });
+    // Should be 60; deduplicate by rounding
+    const seen = new Set();
+    const dedupVerts = [];
+    for(const v of verts){
+      const key = v.map(x=>Math.round(x*1e5)/1e5).join(',');
+      if(!seen.has(key)){ seen.add(key); dedupVerts.push(v); }
+    }
+    const V = dedupVerts;
+
+    // Find edges: all pairs within edge-length threshold
+    let minD = Infinity;
+    for(let i=0;i<V.length;i++) for(let j=i+1;j<V.length;j++){
+      const d = Math.hypot(V[i][0]-V[j][0],V[i][1]-V[j][1],V[i][2]-V[j][2]);
+      if(d < minD - 1e-6) minD = d;
+    }
+    const thresh = minD * 1.08;
+    const edges = [];
+    for(let i=0;i<V.length;i++) for(let j=i+1;j<V.length;j++){
+      const d = Math.hypot(V[i][0]-V[j][0],V[i][1]-V[j][1],V[i][2]-V[j][2]);
+      if(d <= thresh) edges.push([i,j]);
+    }
+
+    // Identify pentagon faces: 12 faces, each around an icosahedron pole
+    // Icosahedron poles = all even perms of (0, ±1, ±φ) normalized
+    const poles = [];
+    for(const [sa,sb] of [[1,1],[1,-1],[-1,1],[-1,-1]])
+      for(const p of evenPerms(0, sa, phi*sb)){
+        const len = Math.hypot(...p);
+        poles.push(p.map(x=>x/len));
+      }
+
+    // For each pole, find the 5 nearest vertices → pentagon
+    const pentagonEdgeSet = new Set();
+    for(const pole of poles){
+      const dists = V.map((v,i)=>({i, d:Math.hypot(v[0]-pole[0],v[1]-pole[1],v[2]-pole[2])}));
+      dists.sort((a,b)=>a.d-b.d);
+      const penta = new Set(dists.slice(0,5).map(x=>x.i));
+      edges.forEach(([i,j], idx)=>{ if(penta.has(i)&&penta.has(j)) pentagonEdgeSet.add(idx); });
+    }
+
+    /* ── Sizing & resize ──────────────────────────────────── */
+    let W,H, ballX,ballY, R;
+    function resize(){
+      W = cv.width  = cv.offsetWidth  || window.innerWidth;
+      H = cv.height = cv.offsetHeight || window.innerHeight;
+      ballX = W * 0.68;
+      ballY = H * 0.46;
+      R = Math.min(W,H) * 0.27;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    /* ── Projection ───────────────────────────────────────── */
+    function project([x,y,z], rX, rY, fy){
+      // rotate Y
+      const cy=Math.cos(rY), sy=Math.sin(rY);
+      const x1 =  x*cy + z*sy;
+      const z1 = -x*sy + z*cy;
+      // rotate X
+      const cx=Math.cos(rX), sx=Math.sin(rX);
+      const y2 = y*cx - z1*sx;
+      const z2 = y*sx + z1*cx;
+      const fov = 3.8;
+      const scale = fov/(fov+z2);
+      return { px: x1*scale*R + ballX, py: y2*scale*R + ballY + fy, z: z2 };
+    }
+
+    /* ── Draw ─────────────────────────────────────────────── */
+    function draw(rX, rY, floatY){
+      ctx.clearRect(0,0,W,H);
+      const dark = document.documentElement.classList.contains('dark');
+      const proj = V.map(v => project(v, rX, rY, floatY));
+
+      // Sort edges back-to-front
+      const sorted = edges.map(([i,j],idx)=>({i,j,idx, avgZ:(proj[i].z+proj[j].z)/2}))
+                          .sort((a,b)=>a.avgZ-b.avgZ);
+
+      for(const {i,j,idx,avgZ} of sorted){
+        const p1=proj[i], p2=proj[j];
+        const depth = (avgZ+1)/2; // 0=back, 1=front
+        const isPenta = pentagonEdgeSet.has(idx);
+
+        ctx.beginPath();
+        ctx.moveTo(p1.px, p1.py);
+        ctx.lineTo(p2.px, p2.py);
+
+        if(isPenta){
+          // Ember red with glow on front-facing pentagon edges
+          const a = 0.35 + depth*0.65;
+          ctx.strokeStyle = `rgba(232,86,79,${a})`;
+          ctx.lineWidth = 1.0 + depth*0.8;
+          ctx.shadowColor = '#E8564F';
+          ctx.shadowBlur = depth > 0.55 ? 7 : 2;
+        } else {
+          const a = dark
+            ? (0.05 + depth*0.20)
+            : (0.04 + depth*0.16);
+          ctx.strokeStyle = dark
+            ? `rgba(220,216,208,${a})`
+            : `rgba(12,13,18,${a})`;
+          ctx.lineWidth = 0.6 + depth*0.55;
+          ctx.shadowBlur = 0;
+        }
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+
+      // Subtle ember glow at ball centre (front face)
+      const grd = ctx.createRadialGradient(ballX, ballY+floatY, R*0.1, ballX, ballY+floatY, R*0.9);
+      grd.addColorStop(0, 'rgba(232,86,79,0.04)');
+      grd.addColorStop(1, 'rgba(232,86,79,0)');
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(ballX, ballY+floatY, R, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    /* ── Animate ──────────────────────────────────────────── */
+    function animate(ts){
+      const t = ts * 0.001;
+      const rY = t * 0.19;
+      const rX = 0.28 + Math.sin(t * 0.13) * 0.14;
+      const fy = Math.sin(t * 0.38) * 22;
+      draw(rX, rY, fy);
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  }
+
+  if(document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', init);
+  else
+    init();
+})();
+</script>
+
